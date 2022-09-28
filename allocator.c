@@ -23,7 +23,7 @@ void alloc_cleanup( void )
 
 allocator_t* alloc_new_allocator( void )
 {
-    allocator_t *temp = malloc( sizeof ( allocator_t ) );
+    allocator_t *temp = ( allocator_t* ) malloc( sizeof ( allocator_t ) );
     if ( !temp )
     {
         perror( "Allocating memory for allocator" );
@@ -32,7 +32,7 @@ allocator_t* alloc_new_allocator( void )
     *temp = (allocator_t) { 0 }; 
     if ( !is_init )
     {
-        allocator_list = malloc( sizeof ( allocator_list_t ) );
+        allocator_list = ( allocator_list_t* ) malloc( sizeof ( allocator_list_t ) );
         if ( !allocator_list )
         {
             perror( "Allocating memory for allocator_list" );
@@ -64,7 +64,7 @@ void* alloc_malloc( allocator_t* allocator, size_t size )
     if ( allocator->capacity && allocator->size >= allocator->capacity )
     {
         allocator->capacity *= 2;
-        allocator->address = realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity );
+        allocator->address = ( intptr_t* ) realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity );
         if ( !allocator->address )
         {
             perror( "Reallocating memory for allocator->address" );
@@ -74,7 +74,7 @@ void* alloc_malloc( allocator_t* allocator, size_t size )
     else if ( !allocator->capacity )
     {
         allocator->capacity ++;
-        allocator->address = malloc( sizeof ( intptr_t ) * allocator->capacity );
+        allocator->address = ( intptr_t* ) malloc( sizeof ( intptr_t ) * allocator->capacity );
         if ( !allocator->address )
         {
             perror( "Allocating memory for allocator->address" );
@@ -100,7 +100,7 @@ void* alloc_calloc( allocator_t* allocator, size_t nmemb, size_t size )
     if ( allocator->capacity && allocator->size >= allocator->capacity )
     {
         allocator->capacity *= 2;
-        allocator->address = realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity );
+        allocator->address = ( intptr_t* ) realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity );
         if ( !allocator->address )
         {
             perror( "Reallocating memory for allocator->address" );
@@ -110,7 +110,7 @@ void* alloc_calloc( allocator_t* allocator, size_t nmemb, size_t size )
     else if ( !allocator->capacity )
     {
         allocator->capacity ++;
-        allocator->address = malloc( sizeof ( intptr_t ) * allocator->capacity );
+        allocator->address = ( intptr_t* ) malloc( sizeof ( intptr_t ) * allocator->capacity );
         if ( !allocator->address )
         {
             perror( "Allocating memory for allocator->address" );
@@ -150,7 +150,7 @@ void* alloc_realloc( allocator_t * allocator, void* ptr, size_t size )
                 if ( allocator->size < allocator->capacity / 4 )
                 {
                     allocator->capacity /= 2;
-                    allocator->address = realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity );
+                    allocator->address = ( intptr_t* ) realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity );
                     if ( !allocator->address )
                     {
                         perror( "Reallocating memory for allocator->address" );
@@ -173,7 +173,7 @@ void* alloc_realloc( allocator_t * allocator, void* ptr, size_t size )
         if ( allocator->capacity && allocator->size >= allocator->capacity )    //if ptr is not in the allocator
         {
             allocator->capacity *= 2;
-            allocator->address = realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity);
+            allocator->address = ( intptr_t* ) realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity);
             if ( !allocator->address )
             {
                 perror( "Reallocating memory for allocator->address" );
@@ -183,7 +183,7 @@ void* alloc_realloc( allocator_t * allocator, void* ptr, size_t size )
         else if( !allocator->capacity )
         {
             allocator->capacity ++;
-            allocator->address = malloc( sizeof ( intptr_t ) * allocator->capacity );
+            allocator->address = ( intptr_t* ) malloc( sizeof ( intptr_t ) * allocator->capacity );
             if ( !allocator->address )
             {
                 perror( "Allocating memory for allocator->address" );
@@ -220,7 +220,7 @@ int alloc_free( allocator_t* allocator, void* ptr )
             if ( allocator->size < allocator->capacity / 4 )
             {
                 allocator->capacity /= 2;
-                allocator->address = realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity );
+                allocator->address = ( intptr_t* ) realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity );
             }
             if ( allocator->size == 0 )
             {
