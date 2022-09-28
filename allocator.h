@@ -29,7 +29,8 @@ typedef struct allocator_list_t
 //functions
 void            alloc_cleanup( void );                                              //this function will be called automatically at exit.
 allocator_t*    alloc_new_allocator( void );                                        //init a new allocator. The memory for the allocator is allocated on the heap. 
-void*           alloc_malloc( allocator_t* allocator, size_t size );                //just like malloc. 
+void*           alloc_malloc( allocator_t* allocator, size_t size );                //just like malloc.
+void*           alloc_calloc( allocator_t* allocator, size_t nmemb, size_t size);   //just like calloc.
 void*           alloc_realloc( allocator_t* allocator, void* ptr, size_t size );    //just like realloc. But if size is 0 and ptr is not allocated by the allocator, alloc_realloc() will not free that ptr. Instead, the program will exit failure. 
 int             alloc_free( allocator_t* allocator, void* ptr );                    //just like free, return 0 on success. But if the ptr is not allocated by the allocator, alloc_free() will not free that ptr. Instead, the function return -1, and exit failure. 
 int             alloc_free_allocator( allocator_t* allocator );                     //free everything inside the target allocator, return 0 on success. But if the allocator does not exist or it is manually changed, the function return -1, and exit failure. 
