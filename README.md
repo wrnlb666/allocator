@@ -12,4 +12,4 @@ call ```alloc_free_allocator(allocator_t)``` to free everything managed by the a
 
 
 TODO:
-  use hashmap instead of doubly linked list to store ```allocator_list```
+  use ```hashmap``` instead of ```doubly linked list``` to store ```allocator_list```
