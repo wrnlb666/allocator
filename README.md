@@ -7,3 +7,9 @@ call ```alloc_new_allocator()``` to initialize a new allocator, call ```alloc_ma
 call ```alloc_free(allocator_t, void*)``` to free a pointer managed by the allocator.
 
 call ```alloc_free_allocator(allocator_t)``` to free everything managed by the allocator. 
+
+
+
+
+TODO:
+  use hashmap instead of doubly linked list to store ```allocator_list```
