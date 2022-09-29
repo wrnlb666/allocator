@@ -29,7 +29,7 @@ allocator_t* alloc_new_allocator( void )
         perror( "ERROR: Allocating memory for allocator" );
         abort();
     }
-    *temp = (allocator_t) { 0 }; 
+    *temp = ( allocator_t ) { 0 }; 
     if ( !is_init )
     {
         allocator_list = ( allocator_list_t* ) malloc( sizeof ( allocator_list_t ) );
