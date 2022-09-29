@@ -26,7 +26,7 @@ allocator_t* alloc_new_allocator( void )
     allocator_t *temp = ( allocator_t* ) malloc( sizeof ( allocator_t ) );
     if ( !temp )
     {
-        perror( "Allocating memory for allocator" );
+        perror( "ERROR: Allocating memory for allocator" );
         abort();
     }
     *temp = (allocator_t) { 0 }; 
@@ -35,7 +35,7 @@ allocator_t* alloc_new_allocator( void )
         allocator_list = ( allocator_list_t* ) malloc( sizeof ( allocator_list_t ) );
         if ( !allocator_list )
         {
-            perror( "Allocating memory for allocator_list" );
+            perror( "ERROR: Allocating memory for allocator_list" );
             abort();
         }
         allocator_list->head = allocator_list->tail = temp;
@@ -67,7 +67,7 @@ void* alloc_malloc( allocator_t* allocator, size_t size )
         allocator->address = ( intptr_t* ) realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity );
         if ( !allocator->address )
         {
-            perror( "Reallocating memory for allocator->address" );
+            perror( "ERROR: Reallocating memory for allocator->address" );
             abort();
         }
     }
@@ -77,7 +77,7 @@ void* alloc_malloc( allocator_t* allocator, size_t size )
         allocator->address = ( intptr_t* ) malloc( sizeof ( intptr_t ) * allocator->capacity );
         if ( !allocator->address )
         {
-            perror( "Allocating memory for allocator->address" );
+            perror( "ERROR: Allocating memory for allocator->address" );
             abort();
         }
     }
@@ -85,7 +85,7 @@ void* alloc_malloc( allocator_t* allocator, size_t size )
     void* temp = malloc( size );
     if ( !temp )
     {
-        perror( "malloc" );
+        perror( "ERROR: malloc" );
         abort();
     }
     allocator->address[allocator->size++] = ( intptr_t ) temp;
@@ -103,7 +103,7 @@ void* alloc_calloc( allocator_t* allocator, size_t nmemb, size_t size )
         allocator->address = ( intptr_t* ) realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity );
         if ( !allocator->address )
         {
-            perror( "Reallocating memory for allocator->address" );
+            perror( "ERROR: Reallocating memory for allocator->address" );
             abort();
         }
     }
@@ -113,7 +113,7 @@ void* alloc_calloc( allocator_t* allocator, size_t nmemb, size_t size )
         allocator->address = ( intptr_t* ) malloc( sizeof ( intptr_t ) * allocator->capacity );
         if ( !allocator->address )
         {
-            perror( "Allocating memory for allocator->address" );
+            perror( "ERROR: Allocating memory for allocator->address" );
             abort();
         }
     }
@@ -121,7 +121,7 @@ void* alloc_calloc( allocator_t* allocator, size_t nmemb, size_t size )
     void* temp = calloc( nmemb, size );
     if ( !temp )
     {
-        perror( "calloc" );
+        perror( "ERROR: calloc" );
         abort();
     }
     allocator->address[allocator->size++] = ( intptr_t ) temp;
@@ -153,7 +153,7 @@ void* alloc_realloc( allocator_t * allocator, void* ptr, size_t size )
                     allocator->address = ( intptr_t* ) realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity );
                     if ( !allocator->address )
                     {
-                        perror( "Reallocating memory for allocator->address" );
+                        perror( "ERROR: Reallocating memory for allocator->address" );
                         abort();
                     }
                 }
@@ -176,7 +176,7 @@ void* alloc_realloc( allocator_t * allocator, void* ptr, size_t size )
             allocator->address = ( intptr_t* ) realloc( allocator->address, sizeof ( intptr_t ) * allocator->capacity);
             if ( !allocator->address )
             {
-                perror( "Reallocating memory for allocator->address" );
+                perror( "ERROR: Reallocating memory for allocator->address" );
                 abort();
             }
         }
@@ -186,7 +186,7 @@ void* alloc_realloc( allocator_t * allocator, void* ptr, size_t size )
             allocator->address = ( intptr_t* ) malloc( sizeof ( intptr_t ) * allocator->capacity );
             if ( !allocator->address )
             {
-                perror( "Allocating memory for allocator->address" );
+                perror( "ERROR: Allocating memory for allocator->address" );
                 abort();
             }
         }
@@ -194,14 +194,14 @@ void* alloc_realloc( allocator_t * allocator, void* ptr, size_t size )
         temp = realloc( ptr, size );
         if ( !temp )
         {
-            perror( "realloc" );
+            perror( "ERROR: realloc" );
             abort();
         }
         allocator->address[allocator->size++] = ( intptr_t ) temp;
     }
     else
     {
-        fprintf( stderr, "Trying to alloc_realloc() a ptr to size 0, \nbut the ptr is not in the allocator\n" );
+        fprintf( stderr, "WARNING: Trying to alloc_realloc() a ptr to size 0, \nbut the ptr is not in the allocator\n" );
         EXIT_FAILURE;
     }
 
@@ -231,7 +231,7 @@ int alloc_free( allocator_t* allocator, void* ptr )
             return 0;
         }
     }
-    fprintf( stderr, "Trying to alloc_free() a ptr, \nbut the ptr is not in the allocator\n" );
+    fprintf( stderr, "WARNING: Trying to alloc_free() a ptr, \nbut the ptr is not in the allocator\n" );
     EXIT_FAILURE;
     return -1;
 }
@@ -278,7 +278,7 @@ int alloc_free_allocator( allocator_t* allocator )
             temp = temp->next;
         }
     }
-    fprintf( stderr, "Trying to alloc_free_allocator() an allocator, \nbut the allocator is not in the allocator list\n" );
+    fprintf( stderr, "WARNING: Trying to alloc_free_allocator() an allocator, \nbut the allocator is not in the allocator list\n" );
     EXIT_FAILURE;
     return -1;
 }
