@@ -59,6 +59,12 @@ allocator_t* alloc_new_allocator( void )
 }
 
 
+void alloc_begin_allocator( allocator_t **allocator )
+{
+    *allocator = alloc_new_allocator();
+}
+
+
 void* alloc_malloc( allocator_t* allocator, size_t size )
 {
     if ( allocator->capacity && allocator->size >= allocator->capacity )
